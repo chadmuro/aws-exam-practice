@@ -43,7 +43,13 @@
   h1 {
     color: #ff9900;
     text-transform: uppercase;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 400;
+  }
+
+  @media only screen and (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+    }
   }
 </style>
