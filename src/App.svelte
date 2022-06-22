@@ -1,22 +1,24 @@
 <script lang="ts">
   import QuestionCard from "./lib/QuestionCard.svelte";
+  import type { Question } from "./types";
 
-  const sampleQuestion = {
+  const sampleQuestion: Question = {
     id: 1,
+    type: "single",
     question:
       "Why is AWS more economical than traditional data centers for applications with varying compute workloads?",
     answers: [
-      { option: 1, text: "Amazon EC2 costs are billed on a monthly basis." },
+      { value: 1, text: "Amazon EC2 costs are billed on a monthly basis." },
       {
-        option: 2,
+        value: 2,
         text: "Users retain full administrative access to their Amazon EC2 instances.",
       },
       {
-        option: 3,
+        value: 3,
         text: "Amazon EC2 instances can be launched on demand when needed.",
       },
       {
-        option: 4,
+        value: 4,
         text: "Users can permanently run enough instances to handle peak workloads.",
       },
     ],
@@ -26,10 +28,7 @@
 
 <main>
   <h1>AWS Certified Cloud Practicioner Exam Practice Questions</h1>
-  <QuestionCard
-    question={sampleQuestion.question}
-    answers={sampleQuestion.answers}
-  />
+  <QuestionCard question={sampleQuestion} />
 </main>
 
 <style>
