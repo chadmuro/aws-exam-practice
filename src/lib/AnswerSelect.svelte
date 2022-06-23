@@ -79,4 +79,10 @@
     border-radius: 50%;
     background: white;
   }
+
+  @media only screen and (max-width: 480px) {
+    .container {
+      font-size: 16px;
+    }
+  }
 </style>

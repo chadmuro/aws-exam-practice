@@ -1,4 +1,8 @@
-<button type="submit">Submit</button>
+<script lang="ts">
+  export let disabled: boolean = false;
+</script>
+
+<button type="submit" {disabled}>Submit</button>
 
 <style>
   button {
