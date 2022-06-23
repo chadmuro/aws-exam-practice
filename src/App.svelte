@@ -24,11 +24,33 @@
     ],
     correctAnswers: [3],
   };
+  const sampleQuestion2: Question = {
+    id: 2,
+    type: "multiple",
+    question:
+      "Which of the following can be used to protect against DDoS attacks? Choose 2 answers from the options given below.",
+    answers: [
+      { value: 1, text: "AWS EC2" },
+      {
+        value: 2,
+        text: "AWS RDS",
+      },
+      {
+        value: 3,
+        text: "AWS Shield",
+      },
+      {
+        value: 4,
+        text: "AWS Shield Advanced",
+      },
+    ],
+    correctAnswers: [3, 4],
+  };
 </script>
 
 <main>
   <h1>AWS Certified Cloud Practicioner Exam Practice Questions</h1>
-  <QuestionCard question={sampleQuestion} />
+  <QuestionCard question={sampleQuestion2} />
 </main>
 
 <style>

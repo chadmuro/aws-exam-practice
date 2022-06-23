@@ -1,24 +1,46 @@
 <script lang="ts">
   import type { Question } from "src/types";
-  import AnswerSelect from "./AnswerSelect.svelte";
+  import AnswerSingle from "./AnswerSingle.svelte";
   import ErrorMessage from "./ErrorMessage.svelte";
   import Button from "./Button.svelte";
   import SuccessMessage from "./SuccessMessage.svelte";
+  import AnswerMultiple from "./AnswerMultiple.svelte";
+  import areArraysEqualSets from "../utils/areArraysEqual";
 
   export let question: Question;
   let selectedAnswer: number | null = null;
+  let selectedAnswers: number[] = [];
   let errorMessage: string | null = null;
   let successMessage: string | null = null;
 
-  const onSubmit = () => {
+  const handleSubmit = () => {
     console.log("submit");
-    if (!selectedAnswer) {
+    if (question.type === "single" && !selectedAnswer) {
       return (errorMessage = "Please select an answer.");
     }
-    if (!question.correctAnswers.includes(selectedAnswer)) {
-      return (errorMessage = "That is incorrect. Try again!");
+    if (
+      question.type === "single" &&
+      !question.correctAnswers.includes(selectedAnswer)
+    ) {
+      return (errorMessage = "Incorrect. Please try again!");
     }
-    return (successMessage = "That is correct. Congratulations!");
+    if (
+      question.type === "multiple" &&
+      selectedAnswers.length !== question.correctAnswers.length
+    ) {
+      return (errorMessage = "Please select the correct number of answers.");
+    }
+    if (
+      question.type === "multiple" &&
+      !areArraysEqualSets(selectedAnswers, question.correctAnswers)
+    ) {
+      return (errorMessage = "Incorrect. Please try again!");
+    }
+    return (successMessage = "Correct. Congratulations!");
+  };
+
+  const handleNextQuestion = () => {
+    console.log("Fetch next question");
   };
 </script>
 
@@ -30,13 +52,26 @@
     <SuccessMessage message={successMessage} />
   {/if}
 
-  <form on:submit|preventDefault={onSubmit}>
+  <form on:submit|preventDefault={handleSubmit}>
     <div class="container">
       {#each question.answers as answer}
-        <AnswerSelect {answer} questionId={question.id} bind:selectedAnswer />
+        {#if question.type === "single"}
+          <AnswerSingle {answer} questionId={question.id} bind:selectedAnswer />
+        {/if}
+        {#if question.type === "multiple"}
+          <AnswerMultiple
+            {answer}
+            questionId={question.id}
+            bind:selectedAnswers
+          />
+        {/if}
       {/each}
       <div class="button">
-        <Button disabled={!!successMessage} />
+        {#if successMessage}
+          <Button text="Next Question" onClick={handleNextQuestion} />
+        {:else}
+          <Button type="submit" text="Submit" />
+        {/if}
       </div>
     </div>
   </form>

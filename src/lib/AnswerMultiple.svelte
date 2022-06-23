@@ -3,16 +3,27 @@
 
   export let answer: Answer;
   export let questionId: number;
-  export let selectedAnswer: number | null;
+  export let selectedAnswers: number[];
+
+  function onChange({ target }) {
+    const { value, checked } = target;
+    if (checked) {
+      selectedAnswers = [...selectedAnswers, parseInt(value, 10)];
+    } else {
+      selectedAnswers = selectedAnswers.filter(
+        (item) => item !== parseInt(value, 10)
+      );
+    }
+  }
 </script>
 
 <label class="container">
   <input
-    type="radio"
-    bind:group={selectedAnswer}
-    id={String(answer.value)}
+    type="checkbox"
     name={String(questionId)}
     value={answer.value}
+    checked={selectedAnswers.includes(answer.value)}
+    on:change={onChange}
   />
   {answer.text}
   <span class="checkmark" />

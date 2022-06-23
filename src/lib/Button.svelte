@@ -1,8 +1,10 @@
 <script lang="ts">
-  export let disabled: boolean = false;
+  export let type = "button";
+  export let text = "";
+  export let onClick: () => void | null = null;
 </script>
 
-<button type="submit" {disabled}>Submit</button>
+<button {type} on:click={onClick}>{text}</button>
 
 <style>
   button {
