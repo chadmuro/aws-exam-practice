@@ -8,7 +8,7 @@
 <main>
   <h1>AWS Certified Cloud Practicioner Exam Practice Questions</h1>
   {#if $loading}
-    <p>Loading...</p>
+    <div><img src="/icons/loading.svg" alt="Loading" /></div>
   {:else if $error}
     <p>Sorry, an unexpected error has occurred.</p>
   {:else if $question}
@@ -30,6 +30,10 @@
     text-transform: uppercase;
     font-size: 3rem;
     font-weight: 400;
+  }
+
+  img {
+    height: 10rem;
   }
 
   @media only screen and (max-width: 480px) {
