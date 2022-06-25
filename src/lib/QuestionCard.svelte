@@ -7,7 +7,8 @@
   import AnswerMultiple from "./AnswerMultiple.svelte";
   import areArraysEqualSets from "../utils/areArraysEqual";
 
-  export let question: Question;
+  export let question: Question | null;
+  export let fetchQuestion: () => void;
   let selectedAnswer: number | null = null;
   let selectedAnswers: number[] = [];
   let errorMessage: string | null = null;
@@ -40,7 +41,10 @@
   };
 
   const handleNextQuestion = () => {
-    console.log("Fetch next question");
+    console.log("next question");
+    errorMessage = null;
+    successMessage = null;
+    fetchQuestion();
   };
 </script>
 
