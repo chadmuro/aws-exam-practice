@@ -6,6 +6,7 @@
   import SuccessMessage from "./SuccessMessage.svelte";
   import AnswerMultiple from "./AnswerMultiple.svelte";
   import areArraysEqualSets from "../utils/areArraysEqual";
+  import shuffleAnswers from "../utils/shuffleAnswers";
 
   export let question: Question | null;
   export let fetchQuestion: () => void;
@@ -46,6 +47,8 @@
     successMessage = null;
     fetchQuestion();
   };
+
+  const shuffledAnswers = shuffleAnswers(question.answers);
 </script>
 
 <div>
@@ -58,7 +61,7 @@
 
   <form on:submit|preventDefault={handleSubmit}>
     <div class="container">
-      {#each question.answers as answer}
+      {#each shuffledAnswers as answer}
         {#if question.type === "single"}
           <AnswerSingle {answer} questionId={question.id} bind:selectedAnswer />
         {/if}
