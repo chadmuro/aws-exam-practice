@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { fly } from "svelte/transition";
   import type { Question } from "src/types";
   import AnswerSingle from "./AnswerSingle.svelte";
   import ErrorMessage from "./ErrorMessage.svelte";
@@ -14,35 +15,39 @@
   let selectedAnswers: number[] = [];
   let errorMessage: string | null = null;
   let successMessage: string | null = null;
+  let incorrectAnswer: number[] = [];
 
   const handleSubmit = () => {
-    console.log("submit");
     if (question.type === "single" && !selectedAnswer) {
+      incorrectAnswer = [selectedAnswer];
       return (errorMessage = "Please select an answer.");
     }
     if (
       question.type === "single" &&
       !question.correctAnswers.includes(selectedAnswer)
     ) {
-      return (errorMessage = "Incorrect. Please try again!");
+      incorrectAnswer = [selectedAnswer];
+      return (errorMessage = "Incorrect 😭. Please try again!");
     }
     if (
       question.type === "multiple" &&
       selectedAnswers.length !== question.correctAnswers.length
     ) {
+      incorrectAnswer = selectedAnswers;
       return (errorMessage = "Please select the correct number of answers.");
     }
     if (
       question.type === "multiple" &&
       !areArraysEqualSets(selectedAnswers, question.correctAnswers)
     ) {
-      return (errorMessage = "Incorrect. Please try again!");
+      incorrectAnswer = selectedAnswers;
+      return (errorMessage = "Incorrect 😭. Please try again!");
     }
-    return (successMessage = "Correct. Congratulations!");
+    return (successMessage = "Correct 🎉. Congratulations!");
   };
 
   const handleNextQuestion = () => {
-    console.log("next question");
+    incorrectAnswer = [];
     errorMessage = null;
     successMessage = null;
     fetchQuestion();
@@ -54,32 +59,46 @@
 <div>
   <h2>{question.question}</h2>
   {#if errorMessage && !successMessage}
-    <ErrorMessage message={errorMessage} />
+    {#key errorMessage && incorrectAnswer}
+      <div in:fly={{ x: 200, duration: 500 }}>
+        <ErrorMessage message={errorMessage} />
+      </div>
+    {/key}
   {:else if successMessage}
-    <SuccessMessage message={successMessage} />
+    <div in:fly={{ x: 200, duration: 500 }}>
+      <SuccessMessage message={successMessage} />
+    </div>
   {/if}
 
   <form on:submit|preventDefault={handleSubmit}>
     <div class="container">
       {#each shuffledAnswers as answer}
         {#if question.type === "single"}
-          <AnswerSingle {answer} questionId={question.id} bind:selectedAnswer />
+          <AnswerSingle
+            {answer}
+            questionId={question.id}
+            bind:selectedAnswer
+            isCorrect={!!successMessage}
+          />
         {/if}
         {#if question.type === "multiple"}
           <AnswerMultiple
             {answer}
             questionId={question.id}
             bind:selectedAnswers
+            isCorrect={!!successMessage}
           />
         {/if}
       {/each}
-      <div class="button">
-        {#if successMessage}
+      {#if successMessage}
+        <div class="button">
           <Button text="Next Question" onClick={handleNextQuestion} />
-        {:else}
+        </div>
+      {:else}
+        <div class="button">
           <Button type="submit" text="Submit" />
-        {/if}
-      </div>
+        </div>
+      {/if}
     </div>
   </form>
 </div>

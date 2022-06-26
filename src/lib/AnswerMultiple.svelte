@@ -4,6 +4,7 @@
   export let answer: Answer;
   export let questionId: number;
   export let selectedAnswers: number[];
+  export let isCorrect: boolean = false;
 
   function onChange({ target }) {
     const { value, checked } = target;
@@ -24,6 +25,7 @@
     value={answer.value}
     checked={selectedAnswers.includes(answer.value)}
     on:change={onChange}
+    disabled={isCorrect}
   />
   {answer.text}
   <span class="checkmark" />

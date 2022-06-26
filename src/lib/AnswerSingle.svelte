@@ -4,6 +4,7 @@
   export let answer: Answer;
   export let questionId: number;
   export let selectedAnswer: number | null;
+  export let isCorrect: boolean = false;
 </script>
 
 <label class="container">
@@ -12,6 +13,7 @@
     bind:group={selectedAnswer}
     name={String(questionId)}
     value={answer.value}
+    disabled={isCorrect}
   />
   {answer.text}
   <span class="checkmark" />
