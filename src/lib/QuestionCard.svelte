@@ -120,7 +120,7 @@
   }
 
   .button {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   @media only screen and (max-width: 480px) {
