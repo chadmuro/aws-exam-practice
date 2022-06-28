@@ -39,6 +39,7 @@
     -ms-user-select: none;
     user-select: none;
     align-self: flex-start;
+    text-align: start;
   }
   .checkmark {
     position: absolute;

@@ -18,23 +18,12 @@
   let incorrectAnswer: number[] = [];
 
   const handleSubmit = () => {
-    if (question.type === "single" && !selectedAnswer) {
-      incorrectAnswer = [selectedAnswer];
-      return (errorMessage = "Please select an answer.");
-    }
     if (
       question.type === "single" &&
-      !question.correctAnswers.includes(selectedAnswer)
+      question.correctAnswers[0] !== selectedAnswer
     ) {
       incorrectAnswer = [selectedAnswer];
       return (errorMessage = "Incorrect 😭. Please try again!");
-    }
-    if (
-      question.type === "multiple" &&
-      selectedAnswers.length !== question.correctAnswers.length
-    ) {
-      incorrectAnswer = selectedAnswers;
-      return (errorMessage = "Please select the correct number of answers.");
     }
     if (
       question.type === "multiple" &&

@@ -8,7 +8,7 @@
 
 <div class="container">
   <main>
-    <h1>AWS Certified Cloud Practicioner Exam Practice Questions</h1>
+    <h1>AWS CCP Exam Practice Questions</h1>
     {#if $loading}
       <div><img src="/icons/loading.svg" alt="Loading" /></div>
     {:else if $error}

@@ -23,6 +23,7 @@ export default createSchema({
             count(*[_type=="question"])
           `) + 1,
           type: "single",
+          tag: "cloud_concepts",
           answers: [{value: 1, text: ""}, {value: 2, text: ""}, {value: 3, text: ""}, {value: 4, text: ""}],
           correctAnswers: [1]
       }),
@@ -46,6 +47,20 @@ export default createSchema({
             list: [
               {title: "Single", value: "single"},
               {title: "Multiple", value: "multiple"}
+            ]
+          },
+          validation: Rule => Rule.required()
+        },
+        {
+          name: "tag",
+          type: "string",
+          title: "Tag",
+          options: {
+            list: [
+              {title: "Cloud Concepts", value: "cloud_concepts"},
+              {title: "Technology", value: "technology"},
+              {title: "Billing and Pricing", value: "billing_and_pricing"},
+              {title: "Security and Compliance", value: "security_and_compliance"}
             ]
           },
           validation: Rule => Rule.required()
